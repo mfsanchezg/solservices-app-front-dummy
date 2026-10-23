@@ -333,6 +333,57 @@
     .login-company-logo { display:block; width:min(100%, 330px); height:auto; object-fit:contain; margin:0 auto 25px; }
     .login-form-wrap { padding-top: 8px; }
     @media (max-width: 700px) { .login-company-logo { width:min(100%, 290px); margin-bottom:20px; } }
+
+    /* ========= LOADER GLOBAL ========= */
+.app-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(11, 28, 48, 0.92);
+  backdrop-filter: blur(10px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: .3s ease;
+}
+
+.app-loader.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.loader-ring {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  border: 4px solid rgba(255,255,255,.12);
+  border-top-color: #12a9b7;
+  border-right-color: #2563eb;
+  animation: loaderSpin .9s linear infinite;
+}
+
+.loader-title{
+  margin-top:22px;
+  color:#fff;
+  font:800 22px Manrope,sans-serif;
+}
+
+.loader-subtitle{
+  margin-top:8px;
+  color:#b7c7d7;
+  font-size:13px;
+}
+
+@keyframes loaderSpin{
+  to{
+    transform:rotate(360deg);
+  }
+}
   </style>
 </head>
 <body>
@@ -417,6 +468,8 @@
       </div>
     </aside>
 
+    <div id="sidebarBackdrop" class="sidebar-backdrop"></div>
+
     <main class="main">
       <header class="topbar">
         <div class="top-left">
@@ -426,7 +479,7 @@
         <div class="top-actions">
           <label class="search-top"><i class="fa-solid fa-magnifying-glass"></i><input id="globalSearch" type="search" placeholder="Buscar orden, cliente..."></label>
           <button class="icon-btn" id="notificationsBtn" title="Notificaciones"><i class="fa-regular fa-bell"></i><span class="notification-dot"></span></button>
-          <div class="top-profile"><div class="avatar">AM</div><div class="profile-text"><strong>Edison Sandoval</strong><span>Administradora</span></div></div>
+          <div class="top-profile"><div class="avatar">AM</div><div class="profile-text"><strong>Edison Sandoval</strong><span>Administrador</span></div></div>
         </div>
       </header>
 
@@ -632,7 +685,7 @@
       return `<div class="generic-heading"><div><div class="eyebrow">Administración del portal</div><h2>Ajustes</h2><p>Configura la información general y las preferencias de operación de SOLSERVICES.</p></div></div>
       <div class="generic-grid"><div class="generic-card"><div class="card-icon"><i class="fa-solid fa-building"></i></div><h3>Datos de empresa</h3><p>Nombre comercial, contacto y datos generales de la organización.</p></div><div class="generic-card"><div class="card-icon" style="background:#e3f8f5;color:#168b78"><i class="fa-solid fa-bell"></i></div><h3>Notificaciones</h3><p>Preferencias de alertas para cambios de estado y nuevas órdenes.</p></div><div class="generic-card"><div class="card-icon" style="background:#fff1e2;color:#b96b17"><i class="fa-solid fa-lock"></i></div><h3>Seguridad</h3><p>Opciones de sesión, permisos y políticas de acceso.</p></div></div>
       <section class="section-panel"><div class="section-toolbar"><div><h3>Configuración general</h3><div class="panel-subtitle">Los cambios se muestran solo en esta demostración</div></div></div><form id="settingsForm"><div class="form-grid"><div class="field"><label for="companyName">Nombre de la empresa</label><input id="companyName" value="SOLSERVICES" required></div><div class="field"><label for="companyEmail">Correo de contacto</label><input id="companyEmail" type="email" value="soporte@solservices.com" required></div><div class="field"><label for="companyPhone">Teléfono de soporte</label><input id="companyPhone" value="+57 601 555 0198"></div><div class="field"><label for="defaultBrand">Marca principal atendida</label><select id="defaultBrand"><option selected>Samsung</option><option>LG</option><option>Whirlpool</option><option>Haceb</option><option>Mabe</option><option>Bosch</option></select></div><div class="field"><label for="defaultCity">Ciudad principal de operación</label><select id="defaultCity"><option>Bogotá</option><option selected>Medellín</option><option>Cali</option><option>Barranquilla</option><option>Bucaramanga</option><option>Pereira</option></select></div><div class="field"><label for="timezone">Zona horaria</label><select id="timezone"><option selected>America/Bogota (UTC-5)</option><option>UTC</option></select></div><div class="field full"><label for="companyDescription">Descripción del servicio</label><textarea id="companyDescription">Gestión de órdenes de soporte técnico, diagnóstico y reparación de electrodomésticos multimarca.</textarea></div><div class="field full"><label style="display:flex;align-items:center;gap:9px"><input type="checkbox" id="emailAlerts" checked style="width:auto"> Recibir notificaciones por correo cuando se registre o actualice una orden</label></div></div><div class="form-footer"><button type="reset" class="btn btn-secondary">Restablecer formulario</button><button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar cambios</button></div></form></section>
-      <section class="section-panel"><div class="section-toolbar"><div><h3>Sesión actual</h3><div class="panel-subtitle">Cuenta utilizada para la demostración</div></div><button class="btn btn-danger" data-demo="logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar sesión</button></div><div style="padding:20px;display:flex;gap:14px;align-items:center"><div class="avatar" style="background:linear-gradient(135deg,#3268d9,#17a8b7)">AM</div><div><strong>Edison Sandoval</strong><div class="panel-subtitle">admin@solservices.com · Administradora</div></div></div></section>`;
+      <section class="section-panel"><div class="section-toolbar"><div><h3>Sesión actual</h3><div class="panel-subtitle">Cuenta utilizada para la demostración</div></div><button class="btn btn-danger" data-demo="logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar sesión</button></div><div style="padding:20px;display:flex;gap:14px;align-items:center"><div class="avatar" style="background:linear-gradient(135deg,#3268d9,#17a8b7)">AM</div><div><strong>Edison Sandoval</strong><div class="panel-subtitle">admin@solservices.com · Administrador</div></div></div></section>`;
     }
 
     function navigateTo(page) {
@@ -717,8 +770,29 @@
       $('#loginError').classList.add('hidden');
       $('#loginScreen').classList.add('hidden');
       $('#appShell').classList.remove('hidden');
-      toast('Bienvenido al portal de SOLSERVICES.');
-      navigateTo('dashboard');
+      $('#loginForm').addEventListener('submit', event => {
+
+  event.preventDefault();
+
+  showLoader(
+    'Iniciando sesión',
+    'Validando credenciales y cargando información...'
+  );
+
+  setTimeout(() => {
+
+    hideLoader();
+
+    $('#loginScreen').classList.add('hidden');
+    $('#appShell').classList.remove('hidden');
+
+    toast('Bienvenido al portal de SOLSERVICES.');
+
+    navigateTo('dashboard');
+
+  }, 2000);
+
+});
     });
 
     $('#togglePassword').addEventListener('click', () => {
@@ -772,8 +846,28 @@
       const demoButton = event.target.closest('[data-demo]');
       if (demoButton) {
         if (demoButton.dataset.demo === 'logout') {
-          $('#appShell').classList.add('hidden'); $('#loginScreen').classList.remove('hidden'); $('#sidebar').classList.remove('open'); toast('Sesión de demostración cerrada.', 'fa-right-from-bracket');
-        } else if (demoButton.dataset.demo === 'support') {
+
+  showLoader(
+    'Cerrando sesión',
+    'Protegiendo tu información...'
+  );
+
+  setTimeout(() => {
+
+    hideLoader();
+
+    $('#appShell').classList.add('hidden');
+    $('#loginScreen').classList.remove('hidden');
+    $('#sidebar').classList.remove('open');
+
+    toast(
+      'Sesión de demostración cerrada.',
+      'fa-right-from-bracket'
+    );
+
+  }, 2000);
+
+}else if (demoButton.dataset.demo === 'support') {
           toast('Contacta al administrador de SOLSERVICES para recibir soporte.', 'fa-headset');
         } else if (demoButton.dataset.demo === 'pagination') {
           toast('La paginación es ilustrativa en esta demo.', 'fa-circle-info');
@@ -812,6 +906,33 @@
     });
 
     renderDashboardOrders();
+    function showLoader(title, subtitle) {
+  document.getElementById('loaderTitle').textContent = title;
+  document.getElementById('loaderSubtitle').textContent = subtitle;
+
+  document.getElementById('appLoader').classList.add('show');
+}
+
+function hideLoader() {
+  document.getElementById('appLoader').classList.remove('show');
+}
   </script>
+  <div id="appLoader" class="app-loader">
+
+  <div class="brand-mark" style="width:68px;height:68px;">
+    <i class="fa-solid fa-screwdriver-wrench"></i>
+  </div>
+
+  <div class="loader-ring"></div>
+
+  <div id="loaderTitle" class="loader-title">
+    Iniciando sesión
+  </div>
+
+  <div id="loaderSubtitle" class="loader-subtitle">
+    Preparando portal...
+  </div>
+
+</div>
 </body>
 </html>

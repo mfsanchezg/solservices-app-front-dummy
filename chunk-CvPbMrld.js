@@ -1,0 +1,1 @@
+function n(r){return(r??``).normalize(`NFD`).replace(/[̀-ͯ]/g,``).toLowerCase().trim()}export{n as t};
